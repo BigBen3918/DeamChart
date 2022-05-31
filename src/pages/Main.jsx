@@ -15,7 +15,7 @@ export default function Main() {
                 <Card />
                 <div className="spacer-double"></div>
                 <Chart />
-                <div className="spacer-10"></div>
+                <div className="spacer-double"></div>
                 <Games />
                 <div className="spacer-double"></div>
             </div>

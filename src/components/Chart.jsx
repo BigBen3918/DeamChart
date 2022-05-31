@@ -54,30 +54,24 @@ export default function Chart() {
 
     return (
         <div>
-            <ComposedChart
-                width={width}
-                height={400}
-                data={data}
-                margin={{
-                    top: 0,
-                    right: 0,
-                    left: 0,
-                    bottom: 0,
-                }}
-            >
+            <ComposedChart width={width} height={400} data={data} margin={0}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
+                <XAxis dataKey="name" tick={{ fill: "black" }} />
+                <YAxis tick={{ fill: "black" }} />
+                <Tooltip
+                    contentStyle={{
+                        backgroundColor: "#2d80df",
+                    }}
+                />
                 <Legend />
                 <Area
                     type="monotone"
                     dataKey="bet"
-                    fill="#8884d8"
-                    stroke="#8884d8"
+                    fill="#87faa4"
+                    stroke="#87faa4"
                 />
-                <Line type="monotone" dataKey="earn" stroke="#ff7300" />
-                <Line type="monotone" dataKey="total" stroke="#4473b0" />
+                <Line type="monotone" dataKey="earn" stroke="#ff2a2a" />
+                <Line type="monotone" dataKey="total" stroke="#00f3d3" />
             </ComposedChart>
         </div>
     );

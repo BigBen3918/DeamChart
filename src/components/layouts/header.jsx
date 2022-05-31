@@ -1,23 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Squash as Hamburger } from "hamburger-react";
 import logo from "../../assets/images/logo.png";
 
 export default function Header() {
+    const navbar = useRef(null);
     const [open, setOpen] = useState(false);
+    const [sticky, setSticky] = useState(false);
 
     useEffect(() => {
         const setResponsiveness = () => {
             return window.innerWidth < 992 ? null : setOpen(false);
         };
+        const handleScroll = () => {
+            return window.pageYOffset > 50 ? setSticky(true) : setSticky(false);
+        };
 
         setResponsiveness();
+        handleScroll();
         window.addEventListener("resize", () => setResponsiveness());
+        window.addEventListener("scroll", () => handleScroll());
     });
 
     return (
         <>
-            <section className="navbar">
+            <section
+                className={sticky ? "navbar sticky" : "navbar"}
+                ref={navbar}
+            >
                 <div className="container">
                     <img src={logo} alt="" />
                     <div className="header__item">
@@ -36,6 +46,7 @@ export default function Header() {
                             toggled={open}
                             toggle={setOpen}
                             size={25}
+                            color={"white"}
                             hideOutline={true}
                             rounded
                         />

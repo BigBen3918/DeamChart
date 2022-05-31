@@ -5,26 +5,26 @@ export default function Card() {
         <div className="row text-center cards">
             <div className="col-md-3 col-sm-6 col-xs-12">
                 <span>
-                    <h5>Total Bet</h5>
-                    <p>210.05k</p>
+                    <h4>Total Bet</h4>
+                    <h5>210.05k</h5>
                 </span>
             </div>
             <div className="col-md-3 col-sm-6 col-xs-12">
                 <span>
-                    <h5>Total Earn</h5>
-                    <p>110.3k</p>
+                    <h4>Total Earn</h4>
+                    <h5>110.3k</h5>
                 </span>
             </div>
             <div className="col-md-3 col-sm-6 col-xs-12">
                 <span>
-                    <h5>Total Stake</h5>
-                    <p>502.01k</p>
+                    <h4>Total Stake</h4>
+                    <h5>502.01k</h5>
                 </span>
             </div>
             <div className="col-md-3 col-sm-6 col-xs-12">
                 <span>
-                    <h5>Total jackpot</h5>
-                    <p>932.75k</p>
+                    <h4>Total jackpot</h4>
+                    <h5>932.75k</h5>
                 </span>
             </div>
         </div>

@@ -8,7 +8,11 @@ export default function Games() {
         {
             id: 1,
             name: <h5>Image</h5>,
-            selector: (row) => row.title,
+            selector: (row) => (
+                <div className="table__image">
+                    <img src={row.image} alt="" />
+                </div>
+            ),
         },
         {
             id: 2,
@@ -22,15 +26,14 @@ export default function Games() {
             name: <h5>TotalStake ($)</h5>,
             selector: (row) => row.runtime,
             sortable: true,
-            right: true,
+            center: true,
             reorder: true,
         },
     ];
 
     return (
-        <div>
+        <div className="games">
             <DataTable
-                title={<h3>Games</h3>}
                 columns={columns}
                 data={movies}
                 sortIcon={<FaSortAmountUp />}
