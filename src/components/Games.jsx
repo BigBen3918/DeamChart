@@ -31,6 +31,10 @@ export default function Games() {
         },
     ];
 
+    const handleClick = (e) => {
+        console.log(e);
+    };
+
     return (
         <div className="games">
             <DataTable
@@ -41,6 +45,7 @@ export default function Games() {
                 pagination
                 paginationPerPage={5}
                 paginationRowsPerPageOptions={[5, 10, 20]}
+                onRowClicked={handleClick}
             />
         </div>
     );

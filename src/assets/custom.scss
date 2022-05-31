@@ -221,4 +221,17 @@ $color_more: #1642d3;
             height: 100%;
         }
     }
+    > div {
+        > div {
+            div:nth-child(2) {
+                cursor: pointer;
+                :hover {
+                    div {
+                        background-color: $color_more;
+                        border-radius: 0;
+                    }
+                }
+            }
+        }
+    }
 }
