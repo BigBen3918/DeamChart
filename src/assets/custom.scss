@@ -170,7 +170,6 @@ $color_more: #1642d3;
     div {
         padding: 15px;
         span {
-            cursor: pointer;
             display: flex;
             padding: 10px;
             flex-direction: column;
@@ -182,10 +181,6 @@ $color_more: #1642d3;
             h5 {
                 color: black;
             }
-        }
-        span:hover {
-            background: linear-gradient(to top, $color, $color_more);
-            color: white;
         }
     }
 }

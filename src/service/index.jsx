@@ -2,17 +2,33 @@ import http from "./http-common";
 
 // Get Data
 const getGameList = async () => {
-    return await http.post("api/games/getgamelist");
+    try {
+        return await http.post("api/games/getgamelist");
+    } catch (err) {
+        console.log(err);
+    }
 }; //Get Games List
 
 const getBetInfos = async () => {
-    return await http.post("api/history/getBetInfos");
+    try {
+        return await http.post("api/history/getBetInfos");
+    } catch (err) {
+        console.log(err);
+    }
 };
 const getCashInfos = async () => {
-    return await http.post("api/history/getCashInfos");
+    try {
+        return await http.post("api/history/getCashInfos");
+    } catch (err) {
+        console.log(err);
+    }
 };
 const getGameInfos = async () => {
-    return await http.post("api/games/getAllGameInfos");
+    try {
+        return await http.post("api/games/getAllGameInfos");
+    } catch (err) {
+        console.log(err);
+    }
 };
 
 const Action = {
