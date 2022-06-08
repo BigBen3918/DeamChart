@@ -24,8 +24,16 @@ const columns = [
     },
     {
         id: 3,
-        name: <h5>POOLBALANCE</h5>,
+        name: <h5>POOL BALANCE</h5>,
         selector: (row) => row.poolBalance,
+        sortable: true,
+        center: true,
+        reorder: true,
+    },
+    {
+        id: 4,
+        name: <h5>APY (%)</h5>,
+        selector: (row) => row.apy,
         sortable: true,
         center: true,
         reorder: true,
@@ -33,12 +41,34 @@ const columns = [
 ];
 
 export default function Games(props) {
-    const { setCurrentGame } = props;
+    const { setCurrentGame, dayGameEarn, totalStake } = props;
     const [games, setGames] = useState(null);
+    const [updateGames, setUpdateGames] = useState(null);
 
     useEffect(() => {
         InitGetData();
     }, []);
+
+    useEffect(() => {
+        if (dayGameEarn !== null && games !== null) {
+            let dayData = [];
+            for (let i = 0; i < games.length; i++) {
+                let bump = games[i];
+                for (let x in dayGameEarn) {
+                    if (x === bump.poolAddress) {
+                        bump = {
+                            ...bump,
+                            apy: Number(
+                                (dayGameEarn[x] / totalStake) * 100 * 360
+                            ).toFixed(2),
+                        };
+                    }
+                }
+                dayData.push(bump);
+            }
+            setUpdateGames(dayData);
+        }
+    }, [dayGameEarn, games]);
 
     const handleClick = (e) => {
         setCurrentGame(e.poolAddress);
@@ -60,11 +90,11 @@ export default function Games(props) {
 
     return (
         <section>
-            {games !== null ? (
+            {updateGames !== null ? (
                 <div className="games">
                     <DataTable
                         columns={columns}
-                        data={games}
+                        data={updateGames}
                         sortIcon={<FaSortAmountUp />}
                         responsive
                         pagination

@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import Action from "../service";
 
 export default function Card(props) {
-    const { dayEarn } = props;
+    const { dayEarn, setTotalStake, totalStake } = props;
     const [totalBet, setTotalBet] = useState(0);
     const [totalCash, setTotalCash] = useState(0);
-    const [totalStake, setTotalStake] = useState(0);
     const [totalAPY, setTotalAPY] = useState(0);
 
     useEffect(() => {
@@ -114,16 +113,7 @@ export default function Card(props) {
             <div className="col-md-3 col-sm-6 col-xs-12">
                 <span>
                     <h4>AVG APY</h4>
-                    <h5>
-                        {totalAPY < 10 ** 9
-                            ? totalAPY < 10 ** 6
-                                ? totalAPY < 10 ** 3
-                                    ? Number(totalAPY).toFixed(2)
-                                    : Number(totalAPY / 10 ** 3).toFixed(2) +
-                                      " K"
-                                : Number(totalAPY / 10 ** 6).toFixed(2) + " M"
-                            : Number(totalAPY / 10 ** 9).toFixed(2) + " B"}
-                    </h5>
+                    <h5>{Number(totalAPY).toFixed(2)} %</h5>
                 </span>
             </div>
         </div>
