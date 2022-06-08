@@ -6,29 +6,32 @@ import Action from "../service";
 const columns = [
     {
         id: 1,
-        name: <h5>Image</h5>,
+        name: <h5>GAME IMAGE</h5>,
         selector: (row) => (
             <div className="table__image">
                 <img src={row.game_img_src} alt="" />
             </div>
         ),
+        center: true,
     },
     {
         id: 2,
-        name: <h5>Name</h5>,
+        name: <h5>GAME NAME</h5>,
         selector: (row) => row.name,
         sortable: true,
         reorder: true,
+        center: true,
     },
     {
         id: 3,
-        name: <h5>PoolBalance ($)</h5>,
+        name: <h5>POOLBALANCE</h5>,
         selector: (row) => row.poolBalance,
         sortable: true,
         center: true,
         reorder: true,
     },
 ];
+
 export default function Games(props) {
     const { setCurrentGame } = props;
     const [games, setGames] = useState(null);
@@ -52,7 +55,6 @@ export default function Games(props) {
             })
             .catch((e) => {
                 console.log(e);
-                alert("Operation Error");
             });
     };
 

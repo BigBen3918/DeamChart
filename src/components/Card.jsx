@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Action from "../service";
 
-export default function Card() {
+export default function Card(props) {
+    const { dayEarn } = props;
     const [totalBet, setTotalBet] = useState(0);
     const [totalCash, setTotalCash] = useState(0);
     const [totalStake, setTotalStake] = useState(0);
+    const [totalAPY, setTotalAPY] = useState(0);
 
     useEffect(() => {
         GetAllInfo();
@@ -12,6 +14,12 @@ export default function Card() {
             GetAllInfo();
         }, 5000);
     }, []);
+
+    useEffect(() => {
+        if (dayEarn !== null) {
+            setTotalAPY((dayEarn / totalStake) * 100 * 360);
+        }
+    }, [dayEarn, totalStake]);
 
     const GetAllInfo = () => {
         Action.getBetInfos()
@@ -50,13 +58,12 @@ export default function Card() {
             })
             .catch((e) => {
                 console.log(e);
-                alert("Operation Error");
             });
     };
 
     return (
         <div className="row text-center cards">
-            <div className="col-md-4 col-sm-6 col-xs-12">
+            <div className="col-md-3 col-sm-6 col-xs-12">
                 <span>
                     <h4>Total Bet</h4>
                     <h5>
@@ -64,7 +71,7 @@ export default function Card() {
                         {totalBet < 10 ** 9
                             ? totalBet < 10 ** 6
                                 ? totalBet < 10 ** 3
-                                    ? totalBet
+                                    ? Number(totalBet).toFixed(2)
                                     : Number(totalBet / 10 ** 3).toFixed(2) +
                                       " K"
                                 : Number(totalBet / 10 ** 6).toFixed(2) + " M"
@@ -72,7 +79,7 @@ export default function Card() {
                     </h5>
                 </span>
             </div>
-            <div className="col-md-4 col-sm-6 col-xs-12">
+            <div className="col-md-3 col-sm-6 col-xs-12">
                 <span>
                     <h4>Total Earn</h4>
                     <h5>
@@ -80,7 +87,7 @@ export default function Card() {
                         {totalCash < 10 ** 9
                             ? totalCash < 10 ** 6
                                 ? totalCash < 10 ** 3
-                                    ? totalCash
+                                    ? Number(totalCash).toFixed(2)
                                     : Number(totalCash / 10 ** 3).toFixed(2) +
                                       " K"
                                 : Number(totalCash / 10 ** 6).toFixed(2) + " M"
@@ -88,7 +95,7 @@ export default function Card() {
                     </h5>
                 </span>
             </div>
-            <div className="col-md-4 col-sm-6 col-xs-12">
+            <div className="col-md-3 col-sm-6 col-xs-12">
                 <span>
                     <h4>Total Stake</h4>
                     <h5>
@@ -96,11 +103,26 @@ export default function Card() {
                         {totalStake < 10 ** 9
                             ? totalStake < 10 ** 6
                                 ? totalStake < 10 ** 3
-                                    ? totalStake
+                                    ? Number(totalStake).toFixed(2)
                                     : Number(totalStake / 10 ** 3).toFixed(2) +
                                       " K"
                                 : Number(totalStake / 10 ** 6).toFixed(2) + " M"
                             : Number(totalStake / 10 ** 9).toFixed(2) + " B"}
+                    </h5>
+                </span>
+            </div>
+            <div className="col-md-3 col-sm-6 col-xs-12">
+                <span>
+                    <h4>AVG APY</h4>
+                    <h5>
+                        {totalAPY < 10 ** 9
+                            ? totalAPY < 10 ** 6
+                                ? totalAPY < 10 ** 3
+                                    ? Number(totalAPY).toFixed(2)
+                                    : Number(totalAPY / 10 ** 3).toFixed(2) +
+                                      " K"
+                                : Number(totalAPY / 10 ** 6).toFixed(2) + " M"
+                            : Number(totalAPY / 10 ** 9).toFixed(2) + " B"}
                     </h5>
                 </span>
             </div>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 // layouts
 import Header from "../components/layouts/header";
+import Footer from "../components/layouts/footer";
 // componets
 import Card from "../components/Card";
 import Chart from "../components/Chart";
@@ -11,34 +12,142 @@ import Action from "../service";
 
 export default function Main() {
     const [currentGame, setCurrentGame] = useState("");
-    const [gameSituation, setGameSituation] = useState("");
     const [loading, setLoading] = useState(false);
+    const [betAmount, setBetAmount] = useState({});
+    const [cashAmount, setCashAmount] = useState({});
+    const [betTime, setBetTime] = useState([]);
+    const [series, setSeries] = useState([]);
+    const [options, setOptions] = useState({});
+    const [dayEarn, setDayEarn] = useState(null);
 
     useEffect(() => {
         getAllGamesInfo();
     }, []);
 
+    useEffect(() => {
+        setSeries([
+            {
+                name: "Bet",
+                data: betAmount[currentGame],
+            },
+            {
+                name: "Cash",
+                data: cashAmount[currentGame],
+            },
+        ]);
+
+        setOptions({
+            chart: {
+                height: 350,
+                type: "area",
+                zoom: {
+                    autoScaleYaxis: true,
+                },
+                toolbar: {
+                    tools: {
+                        download: true,
+                        selection: false,
+                        zoom: true,
+                        zoomin: false,
+                        zoomout: false,
+                        pan: true,
+                        reset: true,
+                    },
+                    autoSelected: "zoom",
+                },
+            },
+            dataLabels: {
+                enabled: false,
+            },
+            stroke: {
+                curve: "smooth",
+            },
+            xaxis: {
+                type: "date",
+                categories: betTime,
+                labels: {
+                    style: {
+                        colors: "#ddd",
+                    },
+                },
+            },
+            yaxis: {
+                labels: {
+                    style: {
+                        colors: "white",
+                    },
+                },
+            },
+            tooltip: {
+                x: {
+                    format: "MM/dd/yyyy",
+                },
+            },
+            fill: {
+                type: "gradient",
+                gradient: {
+                    shadeIntensity: 1,
+                    opacityFrom: 1,
+                    opacityTo: 0,
+                },
+            },
+            legend: {
+                position: "top",
+                horizontalAlign: "center",
+                labels: {
+                    colors: "white",
+                },
+            },
+        });
+
+        if (
+            betTime.length !== 0 &&
+            Object.keys(betAmount).length !== 0 &&
+            Object.keys(cashAmount).length !== 0
+        ) {
+            let dayBet = 0;
+            let dayCash = 0;
+            for (var x in betAmount) {
+                for (
+                    let i = betAmount[x].length - 1;
+                    i > betAmount[x].length - 24;
+                    i--
+                ) {
+                    dayBet += Number(betAmount[x][i]);
+                    dayCash += Number(cashAmount[x][i]);
+                }
+            }
+            setDayEarn(dayBet - dayCash);
+        }
+    }, [betAmount, cashAmount, currentGame, betTime]);
+
     const getAllGamesInfo = () => {
         setLoading(true);
-        Action.getGameInfos()
-            .then((res) => {
-                if (res.data.success === true) {
-                    var allGameData = {};
+        try {
+            Action.getGameInfos().then((res) => {
+                if (res.data.success) {
+                    var allBetData = [];
+                    var allCashData = [];
+                    var allTime = [];
                     var nowTime = new Date();
+                    for (
+                        var i = 1654531200000;
+                        i <= nowTime.getTime();
+                        i += 3600000
+                    ) {
+                        allTime.push(moment(i).format("MM/DD/YYYY HH"));
+                    }
+
                     for (var x of res.data.result[0]) {
-                        var allBumpData = [];
+                        var bpp = [];
                         for (
-                            var i = 1654012800000;
+                            var i = 1654531200000;
                             i <= nowTime.getTime();
                             i += 3600000
                         ) {
-                            let bump = {
-                                time: moment(i).format("MM/DD/YYYY HH:MM:SS"),
-                                Cash: 0,
-                                Bet: 0,
-                            };
+                            var bump = 0;
                             for (var y of res.data.result[1]) {
-                                let gtime = new Date(
+                                var gtime = new Date(
                                     y._id.month +
                                         "/" +
                                         y._id.day +
@@ -52,15 +161,23 @@ export default function Main() {
                                     i === gtime.getTime() &&
                                     x.poolAddress === y._id.poolAddress
                                 ) {
-                                    bump = {
-                                        ...bump,
-                                        Bet: Number(y.betAmount),
-                                    };
+                                    bump = Number(y.betAmount).toFixed(0);
                                     break;
                                 }
                             }
+                            bpp.push(bump);
+                        }
+                        allBetData[x.poolAddress] = bpp;
+
+                        var cpp = [];
+                        for (
+                            var i = 1654531200000;
+                            i <= nowTime.getTime();
+                            i += 3600000
+                        ) {
+                            var bump = 0;
                             for (var z of res.data.result[2]) {
-                                let gtime = new Date(
+                                var gtime = new Date(
                                     z._id.month +
                                         "/" +
                                         z._id.day +
@@ -74,31 +191,28 @@ export default function Main() {
                                     i === gtime.getTime() &&
                                     x.poolAddress === z._id.poolAddress
                                 ) {
-                                    bump = {
-                                        ...bump,
-                                        Cash: Number(z.cashAmount),
-                                    };
+                                    bump = Number(z.cashAmount).toFixed(0);
                                     break;
                                 }
                             }
-                            allBumpData.push(bump);
+                            cpp.push(bump);
                         }
-                        allGameData = {
-                            ...allGameData,
-                            [x.poolAddress]: allBumpData,
-                        };
+                        allCashData[x.poolAddress] = cpp;
                     }
-                    setGameSituation(allGameData);
+
+                    setBetAmount(allBetData);
+                    setCashAmount(allCashData);
+                    setBetTime(allTime);
                 } else {
-                    alert(res.data.errors);
+                    console.log(res.data.errors);
                 }
                 setLoading(false);
-            })
-            .catch((err) => {
-                console.log(err);
-                setLoading(false);
-                alert("Operation Error");
             });
+        } catch (err) {
+            console.log(err);
+            setLoading(false);
+            console.log("Operation Error");
+        }
     };
 
     return (
@@ -106,7 +220,7 @@ export default function Main() {
             <Header />
             <div className="container" id="main__board">
                 <div className="spacer-half"></div>
-                <Card />
+                <Card dayEarn={dayEarn} />
                 <div className="spacer-double"></div>
                 {loading ? (
                     <div className="justify center">
@@ -114,16 +228,14 @@ export default function Main() {
                     </div>
                 ) : (
                     <>
-                        <Chart
-                            currentGame={currentGame}
-                            gameSituation={gameSituation}
-                        />
+                        <Chart series={series} options={options} />
                         <div className="spacer-double"></div>
                         <Games setCurrentGame={setCurrentGame} />
                     </>
                 )}
                 <div className="spacer-double"></div>
             </div>
+            <Footer />
         </>
     );
 }

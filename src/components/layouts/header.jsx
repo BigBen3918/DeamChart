@@ -29,11 +29,14 @@ export default function Header() {
                 ref={navbar}
             >
                 <div className="container">
-                    <img src={logo} alt="" />
+                    <div>
+                        <img src={logo} alt="" />
+                        <h3>BabylonSwap</h3>
+                    </div>
                     <div className="header__item">
                         <ul>
                             <li>
-                                <Link to="">Casio</Link>
+                                <Link to="">Casino</Link>
                             </li>
                             <li>
                                 <Link to="">Dex</Link>
@@ -41,7 +44,7 @@ export default function Header() {
                         </ul>
                     </div>
 
-                    <div className="header__exit">
+                    <span className="header__exit">
                         <Hamburger
                             toggled={open}
                             toggle={setOpen}
@@ -50,7 +53,7 @@ export default function Header() {
                             hideOutline={true}
                             rounded
                         />
-                    </div>
+                    </span>
                 </div>
             </section>
 
