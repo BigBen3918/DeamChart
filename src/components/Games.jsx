@@ -25,7 +25,7 @@ const columns = [
     {
         id: 3,
         name: <h5>POOL BALANCE</h5>,
-        selector: (row) => row.poolBalance,
+        selector: (row) => Number(row.poolBalance).toFixed(2),
         sortable: true,
         center: true,
         reorder: true,
