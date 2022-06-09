@@ -20,7 +20,7 @@ export default function Main() {
     const [options, setOptions] = useState({});
     const [dayEarn, setDayEarn] = useState(null);
     const [dayGameEarn, setDayGameEarn] = useState(null);
-    const [totalStake, setTotalStake] = useState(0);
+    const [games, setGames] = useState(null);
 
     useEffect(() => {
         getAllGamesInfo();
@@ -29,11 +29,11 @@ export default function Main() {
     useEffect(() => {
         setSeries([
             {
-                name: "Bet",
+                name: "Bets",
                 data: betAmount[currentGame],
             },
             {
-                name: "Cash",
+                name: "Earnings",
                 data: cashAmount[currentGame],
             },
         ]);
@@ -232,11 +232,7 @@ export default function Main() {
             <Header />
             <div className="container" id="main__board">
                 <div className="spacer-half"></div>
-                <Card
-                    dayEarn={dayEarn}
-                    setTotalStake={setTotalStake}
-                    totalStake={totalStake}
-                />
+                <Card dayEarn={dayEarn} />
                 <div className="spacer-double"></div>
                 {loading ? (
                     <div className="justify center">
@@ -247,9 +243,10 @@ export default function Main() {
                         <Chart series={series} options={options} />
                         <div className="spacer-double"></div>
                         <Games
-                            setCurrentGame={setCurrentGame}
+                            games={games}
+                            setGames={setGames}
                             dayGameEarn={dayGameEarn}
-                            totalStake={totalStake}
+                            setCurrentGame={setCurrentGame}
                         />
                     </>
                 )}

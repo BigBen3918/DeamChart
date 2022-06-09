@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import Action from "../service";
 
 export default function Card(props) {
-    const { dayEarn, setTotalStake, totalStake } = props;
+    const { dayEarn } = props;
     const [totalBet, setTotalBet] = useState(0);
     const [totalCash, setTotalCash] = useState(0);
     const [totalAPY, setTotalAPY] = useState(0);
+    const [totalStake, setTotalStake] = useState(0);
 
     useEffect(() => {
         GetAllInfo();
@@ -18,7 +19,7 @@ export default function Card(props) {
         if (dayEarn !== null) {
             setTotalAPY((dayEarn / totalStake) * 100 * 360);
         }
-    }, [dayEarn, totalStake]);
+    }, [dayEarn]);
 
     const GetAllInfo = () => {
         Action.getBetInfos()

@@ -34,14 +34,14 @@ export default function Header() {
                         <h3>BabylonSwap</h3>
                     </div>
                     <div className="header__item">
-                        <ul>
+                        {/* <ul>
                             <li>
                                 <Link to="">Casino</Link>
                             </li>
                             <li>
                                 <Link to="">Dex</Link>
                             </li>
-                        </ul>
+                        </ul> */}
                     </div>
 
                     <span className="header__exit">
@@ -70,9 +70,9 @@ export default function Header() {
                     <div>
                         <Link to="">Casino</Link>
                     </div>
-                    <div>
+                    {/* <div>
                         <Link to="">Dex</Link>
-                    </div>
+                    </div> */}
                 </span>
             </div>
 

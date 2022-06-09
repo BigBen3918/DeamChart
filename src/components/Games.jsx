@@ -6,7 +6,7 @@ import Action from "../service";
 const columns = [
     {
         id: 1,
-        name: <h5>GAME IMAGE</h5>,
+        name: "",
         selector: (row) => (
             <div className="table__image">
                 <img src={row.game_img_src} alt="" />
@@ -24,7 +24,7 @@ const columns = [
     },
     {
         id: 3,
-        name: <h5>POOL BALANCE</h5>,
+        name: <h5>Pool Balance (XBT)</h5>,
         selector: (row) => Number(row.poolBalance).toFixed(2),
         sortable: true,
         center: true,
@@ -41,8 +41,8 @@ const columns = [
 ];
 
 export default function Games(props) {
-    const { setCurrentGame, dayGameEarn, totalStake } = props;
-    const [games, setGames] = useState(null);
+    const { setCurrentGame, dayGameEarn, games, setGames } = props;
+
     const [updateGames, setUpdateGames] = useState(null);
 
     useEffect(() => {
@@ -59,7 +59,7 @@ export default function Games(props) {
                         bump = {
                             ...bump,
                             apy: Number(
-                                (dayGameEarn[x] / totalStake) * 100 * 360
+                                (dayGameEarn[x] / bump.poolBalance) * 100 * 360
                             ).toFixed(2),
                         };
                     }
@@ -79,6 +79,7 @@ export default function Games(props) {
             .then((res) => {
                 if (res.data.success) {
                     setGames(res.data.games);
+                    setCurrentGame(res.data.games[0].poolAddress);
                 } else {
                     alert(res.data.errors);
                 }
