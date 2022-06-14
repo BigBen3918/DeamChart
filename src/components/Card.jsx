@@ -67,7 +67,6 @@ export default function Card(props) {
                 <span>
                     <h4>Total Bets Made In This Game</h4>
                     <h5>
-                        +
                         {totalBet < 10 ** 9
                             ? totalBet < 10 ** 6
                                 ? totalBet < 10 ** 3
@@ -83,7 +82,6 @@ export default function Card(props) {
                 <span>
                     <h4>Total Earnings Realized In This Game</h4>
                     <h5>
-                        +
                         {totalCash < 10 ** 9
                             ? totalCash < 10 ** 6
                                 ? totalCash < 10 ** 3
@@ -99,7 +97,6 @@ export default function Card(props) {
                 <span>
                     <h4>Total Stakes Invested In This Game Pool</h4>
                     <h5>
-                        +
                         {totalStake < 10 ** 9
                             ? totalStake < 10 ** 6
                                 ? totalStake < 10 ** 3
@@ -113,7 +110,7 @@ export default function Card(props) {
             </div>
             <div className="col-md-3 col-sm-6 col-xs-12">
                 <span>
-                    <h4>Average APY From All Game Po</h4>
+                    <h4>Average APY From All Game Pool</h4>
                     <h5>{Number(totalAPY).toFixed(2)} %</h5>
                 </span>
             </div>
