@@ -59,7 +59,9 @@ export default function Games(props) {
                         bump = {
                             ...bump,
                             apy: Number(
-                                (dayGameEarn[x] / bump.poolBalance) * 100 * 360
+                                (((dayGameEarn[x] / bump.poolBalance) * 100) /
+                                    7) *
+                                    360
                             ).toFixed(2),
                         };
                     }

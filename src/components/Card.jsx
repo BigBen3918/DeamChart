@@ -17,7 +17,7 @@ export default function Card(props) {
 
     useEffect(() => {
         if (dayEarn !== null) {
-            setTotalAPY((dayEarn / totalStake) * 100 * 360);
+            setTotalAPY((((dayEarn / totalStake) * 100) / 7) * 360);
         }
     }, [dayEarn]);
 

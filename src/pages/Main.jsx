@@ -115,7 +115,7 @@ export default function Main() {
                 let bumpCash = 0;
                 for (
                     let i = betAmount[x].length - 1;
-                    i > betAmount[x].length - 24;
+                    i > betAmount[x].length - 168;
                     i--
                 ) {
                     dayBet += Number(betAmount[x][i]);
