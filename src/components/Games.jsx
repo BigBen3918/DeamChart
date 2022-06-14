@@ -79,7 +79,6 @@ export default function Games(props) {
             .then((res) => {
                 if (res.data.success) {
                     setGames(res.data.games);
-                    setCurrentGame(res.data.games[0].poolAddress);
                 } else {
                     alert(res.data.errors);
                 }

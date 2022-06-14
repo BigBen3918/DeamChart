@@ -240,6 +240,12 @@ export default function Main() {
                     </div>
                 ) : (
                     <>
+                        {currentGame === "" ? (
+                            <h4 className="justify middle center text-white">
+                                !Click Any Game From The List Below To See Its
+                                Chart
+                            </h4>
+                        ) : null}
                         <Chart series={series} options={options} />
                         <div className="spacer-double"></div>
                         <Games
