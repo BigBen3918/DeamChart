@@ -45,14 +45,14 @@ export default function Header() {
                     </div>
 
                     <span className="header__exit">
-                        <Hamburger
+                        {/* <Hamburger
                             toggled={open}
                             toggle={setOpen}
                             size={25}
                             color={"white"}
                             hideOutline={true}
                             rounded
-                        />
+                        /> */}
                     </span>
                 </div>
             </section>
